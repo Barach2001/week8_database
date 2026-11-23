@@ -1,0 +1,84 @@
+-- Week 8 Assignment: MySQL Database Backup and Restore
+-- Name: Barach Aduot
+-- Repository: https://github.com/Barach2001/week8_database
+--
+-- NOTE:
+-- mysqldump is a command-line utility, not a SQL statement.
+-- Run the commands below in your computer's system terminal (Command Prompt,
+-- PowerShell, or a terminal), not inside the MySQL SQL prompt.
+-- Each command uses -p so MySQL prompts you to enter the root password.
+--
+-- ============================================================
+-- QUESTION 1: CREATING A COMPLETE DATABASE BACKUP
+-- ============================================================
+--
+-- Command:
+-- mysqldump -u root -p sales > sales_backup.sql
+--
+-- Explanation:
+-- - mysqldump exports the database structure and its data.
+-- - -u root specifies root as the MySQL username.
+-- - -p prompts for the MySQL password securely.
+-- - sales is the database being backed up.
+-- - > sales_backup.sql writes the backup to this file.
+--
+-- A complete backup is important because it allows the database to be
+-- restored if data is accidentally deleted, corrupted, or lost during
+-- maintenance or a system failure. Regular backups reduce downtime and
+-- help protect important business information.
+--
+-- ============================================================
+-- QUESTION 2: BACKING UP ALL DATABASES
+-- ============================================================
+--
+-- Command:
+-- mysqldump -u root -p --all-databases > all_databases_backup.sql
+--
+-- Explanation:
+-- - --all-databases tells mysqldump to export every database on the server.
+-- - -u root specifies root as the MySQL username.
+-- - -p prompts for the MySQL password.
+-- - > all_databases_backup.sql saves the complete export in this file.
+--
+-- Backing up all databases before migration helps ensure that no database
+-- is left behind. It preserves the data and database objects needed to move
+-- the server to a new environment and provides a recovery copy if migration
+-- fails. The destination MySQL server should be compatible with the backup.
+--
+-- ============================================================
+-- QUESTION 3: CREATING A DATA-ONLY BACKUP
+-- ============================================================
+-- The assignment description mentions data-only backups, but the exact
+-- wording of Question 3 was not included in the instructions shared.
+-- This answer uses the data-only task described in the learning objectives.
+--
+-- Command:
+-- mysqldump -u root -p --no-create-info sales > sales_data_backup.sql
+--
+-- Explanation:
+-- - --no-create-info excludes CREATE TABLE statements (table definitions).
+-- - The command exports the rows of data from the sales database.
+-- - -u root specifies root as the MySQL username.
+-- - -p prompts for the MySQL password.
+-- - > sales_data_backup.sql saves the data-only export.
+--
+-- A data-only backup is useful when the table structure already exists on
+-- the destination database and only the records need to be transferred or
+-- restored. The destination tables must have compatible structures.
+--
+-- ============================================================
+-- RESTORE EXAMPLES (REFERENCE)
+-- ============================================================
+-- Restore the complete sales backup:
+-- mysql -u root -p sales < sales_backup.sql
+--
+-- Restore the all-databases backup:
+-- mysql -u root -p < all_databases_backup.sql
+--
+-- Restore data-only records into an existing sales database:
+-- mysql -u root -p sales < sales_data_backup.sql
+--
+-- IMPORTANT:
+-- Test these commands in your own system terminal and verify that the
+-- backup files are created and contain the expected data. These commands
+-- have not been executed against your local MySQL server by this submission.
